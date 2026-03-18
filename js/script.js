@@ -107,7 +107,7 @@ audio.addEventListener('ended', () => {
 playSong(currentSongIndex, false);
 
 // CONFIGURACIÓN EFECTO HACKER (TYPEWRITER)
-const bioText = " Poco a poco, lo pequeño se hace grande. // Construyendo en silencio [Do_Not_Disturb: On]";
+const bioText = " Poco a poco, lo pequeño se hace grande. // [Do_Not_Disturb: On]";
 const speed = 50; // Velocidad en milisegundos
 let i = 0;
 
@@ -156,3 +156,40 @@ setInterval(updateSystem, 1000);
 updateSystem();
 getBCNWeather();
 setInterval(getBCNWeather, 60000); // Actualiza clima cada 1 min
+/* --- [AÑADIR ESTA FUNCIÓN AL FINAL DE TU SCRIPT.JS] --- */
+
+function showTab(tabId) {
+    // 1. Ocultar todos los contenidos con fade
+    const contents = document.querySelectorAll('.tab-content');
+    contents.forEach(content => {
+        content.classList.remove('active');
+    });
+
+    // 2. Desactivar todos los botones de la nav
+    const buttons = document.querySelectorAll('.nav-item');
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    // 3. Activar el seleccionado
+    const targetTab = document.getElementById('tab-' + tabId);
+    targetTab.classList.add('active');
+    
+    // El botón se activa por el evento click
+    event.currentTarget.classList.add('active');
+
+    // Reiniciar Typewriter si volvemos a Bio
+    if(tabId === 'bio') {
+        i = 0;
+        document.getElementById("typewriter").innerHTML = "";
+        typeWriter();
+    }
+}
+
+// Asegúrate de que tu window.onload o DOMContentLoaded llame a las funciones iniciales
+document.addEventListener('DOMContentLoaded', () => {
+    updateSystem();
+    getBCNWeather();
+    setInterval(updateSystem, 1000);
+    typeWriter(); // Iniciar efecto de texto
+});

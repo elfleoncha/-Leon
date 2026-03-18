@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>~$Leon // Updates soon</title>
+  <title>~$Leon // Portfolio v5.0</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@300;500&display=swap" rel="stylesheet">
-  
   <link rel="stylesheet" href="./css/style.css" />
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
   <script defer src="./js/script.js"></script>
 </head>
 <body>
-    <header class="top-system-bar">
+
+  <header class="top-system-bar">
     <div class="sys-left">
         <div class="analog-clock">
             <div class="hand hour" id="hour-hand"></div>
@@ -25,7 +25,6 @@
             <span id="digital-clock">00:00</span>
         </div>
     </div>
-    
     <div class="sys-right">
         <div class="weather-widget">
             <span class="sys-loc">BCN // 41.38°N</span>
@@ -34,7 +33,7 @@
         </div>
         <span class="sys-status">STABLE</span>
     </div>
-</header>
+  </header>
 
   <div id="fondo">
     <div class="noise"></div>
@@ -45,69 +44,97 @@
     
     <aside class="side-widget">
       <section class="glass-player" id="playerContainer">
-        
         <div class="album-wrapper">
           <img id="cover" src="./assets/img/cover1.jpg" alt="Carátula" />
         </div>
-        
         <div class="player-info">
           <div class="status">NOW STREAMING</div>
           <div id="nowPlaying">Selecciona un track</div>
-          
           <div class="progress-area">
-            <input type="range" id="seek" value="0" step="0.1" aria-label="Progreso de la canción" />
+            <input type="range" id="seek" value="0" step="0.1" />
             <div class="time-stamps">
               <span id="currentTime">0:00</span>
               <span id="duration">0:00</span>
             </div>
           </div>
-
           <div class="controls">
-            <button id="prevBtn" class="btn-icon" aria-label="Anterior">⏮</button>
-            <button id="pausePlayBtn" class="btn-play" aria-label="Reproducir/Pausar">▶</button>
-            <button id="skipBtn" class="btn-icon" aria-label="Siguiente">⏭</button>
+            <button id="prevBtn" class="btn-icon">⏮</button>
+            <button id="pausePlayBtn" class="btn-play">▶</button>
+            <button id="skipBtn" class="btn-icon">⏭</button>
           </div>
         </div>
-        
         <audio id="audio"></audio>
       </section>
     </aside>
 
-    <section class="profile-hub">
-      <div class="avatar-container">
-        <img id="avatar" src="./assets/img/avatar.jpg" alt="elfleoncha avatar" />
-        <div class="online-indicator">LIVE</div>
-      </div>
-
-      <div class="profile-content">
+    <section class="profile-hub" id="main-panel">
+      
+      <div id="tab-bio" class="tab-content active">
+        <div class="avatar-container">
+          <img id="avatar" src="./assets/img/avatar.jpg" alt="avatar" />
+          <div class="online-indicator">LIVE</div>
+        </div>
         <h1 class="hero-name">elfleoncha</h1>
         <p class="tagline">DEV // STK | BCN</p>
-        
         <div class="bio-terminal">
           <span class="cmd">> user.bio:</span>
           <p class="bio-text">
             <span id="typewriter">fleoncha@system:~$ initializing_bio... COMPLETED:</span><span class="cursor">|</span>
           </p>
         </div>
-
         <div class="social-interactive">
-          <a href="https://www.instagram.com/fleon.priv" target="_blank" rel="noopener" class="social-box">
-            <img src="./assets/img/logoIG.jpg" alt="Instagram">
+          <a href="https://instagram.com/fleon.priv" target="_blank" class="social-box">
             <span>INSTAGRAM</span>
           </a>
-          <a href="https://github.com/elfleoncha" target="_blank" rel="noopener" class="social-box">
-            <img src="./assets/img/github.jpg" alt="GitHub">
+          <a href="https://github.com/elfleoncha" target="_blank" class="social-box">
             <span>GITHUB</span>
+          </a>
+          <a href="https://open.spotify.com/user/31wbdxst2paxfm4livotc7pe5q2m" target="_blank" class="social-box">
+            <span>SPOTIFY</span>
           </a>
         </div>
       </div>
-    </section>
 
+      <div id="tab-projects" class="tab-content">
+        <h2 class="section-title">PROJECT_LOG</h2>
+        <div class="projects-grid">
+          <div class="project-card">
+            <span class="p-tag">v4.5</span>
+            <h3>Nebula Hub</h3>
+            <p>Interfaz reactiva con Glassmorphism y música sincronizada.</p>
+            <a href="#" class="p-link">VIEW_SYSTEM</a>
+          </div>
+          <div class="project-card">
+            <span class="p-tag">v1.0</span>
+            <h3>Data Visualizer</h3>
+            <p>Análisis de datos atmosféricos en tiempo real para BCN.</p>
+            <a href="#" class="p-link">VIEW_SYSTEM</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-skills" class="tab-content">
+        <h2 class="section-title">CORE_CAPABILITIES</h2>
+        <div class="skills-container">
+          <div class="skill-item"><span>HTML/CSS</span><div class="bar"><div class="fill" style="width:90%"></div></div></div>
+          <div class="skill-item"><span>JAVASCRIPT</span><div class="bar"><div class="fill" style="width:85%"></div></div></div>
+          <div class="skill-item"><span>REACT</span><div class="bar"><div class="fill" style="width:70%"></div></div></div>
+          <div class="skill-item"><span>UI/UX</span><div class="bar"><div class="fill" style="width:80%"></div></div></div>
+        </div>
+      </div>
+
+    </section>
   </main>
 
   <footer class="minimal-footer">
-    <p>v4.5 // EST. 2026 // LEON-SYSTEMS</p>
+    <p>v5.0 // EST. 2026 // LEON-SYSTEMS</p>
   </footer>
+
+  <nav class="system-nav">
+      <button class="nav-item active" onclick="showTab('bio')">SYSTEM</button>
+      <button class="nav-item" onclick="showTab('projects')">PROJECTS</button>
+      <button class="nav-item" onclick="showTab('skills')">TECH</button>
+  </nav>
 
 </body>
 </html>

@@ -44,6 +44,8 @@ body {
     align-items: center;
     min-height: 100vh;
     overflow-x: hidden;
+    padding-bottom: 80px; 
+    
 }
 
 /* --- 4. FONDO REACTIVO --- */
@@ -234,12 +236,15 @@ input[type="range"]::-webkit-slider-thumb {
 .btn-icon { padding: 10px 20px; }
 .btn-play { background: #fff; color: #000; font-weight: 900; padding: 10px 20px; }
 
+
+
 /* --- 10. ADAPTACIÓN PC --- */
 @media (min-width: 900px) {
     .main-layout { flex-direction: row; padding-top: 1vh; gap: 40px; align-items: flex-start; }
     .side-widget { flex: 1; position: sticky; top: 20px; }
     .profile-hub { flex: 1.5; padding: 60px 40px; border-radius: var(--radius-xl); }
 
+    body { padding-bottom: 0px;}
     .glass-player { 
         flex-direction: column; 
         padding: 45px; 
@@ -326,6 +331,7 @@ input[type="range"]::-webkit-slider-thumb {
         background: #00ff88; border-radius: 50%; margin-right: 8px;
         box-shadow: 0 0 10px #00ff88; animation: blink 2s infinite;
     }
+    
 }
 
 /* --- 11. ANIMACIONES & EFECTOS --- */
@@ -407,4 +413,128 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .album-wrapper:hover #cover {
     filter: brightness(1.1);
     cursor: pointer;
+}
+/* --- [AÑADIR ESTO A TU STYLE.CSS] --- */
+
+/* NAV BAR DOCK */
+.system-nav {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 15, 15, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    padding: 8px;
+    border-radius: 24px;
+    display: flex;
+    gap: 8px;
+    z-index: 1000;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+}
+
+.nav-item {
+    background: transparent;
+    border: none;
+    color: var(--accent-dim);
+    padding: 12px 24px;
+    border-radius: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.4s var(--smooth);
+}
+
+.nav-item.active {
+    background: var(--accent);
+    color: #000;
+    font-weight: 800;
+    box-shadow: 0 0 15px rgba(255,255,255,0.2);
+}
+
+/* CONTENIDO DE PESTAÑAS */
+.tab-content {
+    display: none;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: all 0.5s var(--smooth);
+}
+
+.tab-content.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ESTILOS PROYECTOS */
+.section-title {
+    font-family: 'Syncopate';
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    letter-spacing: 5px;
+    opacity: 0.8;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.project-card {
+    background: var(--glass-surface);
+    border: 1px solid var(--glass-border);
+    padding: 25px;
+    border-radius: 24px;
+    transition: 0.4s;
+}
+
+.project-card:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: var(--accent-dim);
+    transform: scale(1.02);
+}
+
+.p-tag { font-size: 9px; color: var(--accent-dim); font-family: 'JetBrains Mono'; }
+.p-link { 
+    display: inline-block; margin-top: 15px; 
+    font-size: 10px; font-weight: 800; color: var(--accent); 
+    text-decoration: none; border-bottom: 1px solid var(--accent);
+}
+
+/* ESTILOS SKILLS */
+.skills-container { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 20px; }
+.skill-item { width: 100%; font-family: 'JetBrains Mono'; font-size: 11px; }
+.bar { width: 100%; height: 4px; background: var(--accent-ultra-dim); border-radius: 2px; margin-top: 8px; }
+.fill { height: 100%; background: var(--accent); border-radius: 2px; box-shadow: 0 0 10px var(--accent); }
+.system-nav {
+    position: fixed;
+    bottom: 30px; /* Separación del borde inferior */
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 15, 15, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    padding: 8px;
+    border-radius: 24px;
+    display: flex;
+    gap: 8px;
+    z-index: 1000; /* Asegura que esté por encima de todo */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+}
+
+.minimal-footer {
+    padding: 30px; 
+    opacity: 0.2;
+    font-family: 'JetBrains Mono'; 
+    font-size: 9px;
+    letter-spacing: 4px; 
+    text-align: center;
+    position: relative;
+    z-index: 5; /* Por debajo de la nav bar */
 }
