@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>~$Leon // Updates soon</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@300;500&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./css/style.css" />
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
+  <script defer src="./js/script.js"></script>
+</head>
+<body>
+    <header class="top-system-bar">
+    <div class="sys-left">
+        <div class="analog-clock">
+            <div class="hand hour" id="hour-hand"></div>
+            <div class="hand min" id="min-hand"></div>
+            <div class="hand sec" id="sec-hand"></div>
+        </div>
+        <div class="sys-info">
+            <span class="sys-tag">LEON-OS // NEBULA</span>
+            <span id="digital-clock">00:00</span>
+        </div>
+    </div>
+    
+    <div class="sys-right">
+        <div class="weather-widget">
+            <span class="sys-loc">BCN // 41.38°N</span>
+            <span id="temp-val">--°C</span>
+            <span id="weather-desc">LOADING...</span>
+        </div>
+        <span class="sys-status">STABLE</span>
+    </div>
+</header>
+
+  <div id="fondo">
+    <div class="noise"></div>
+    <img src="./assets/img/Wallpaper.jpg" alt="Fondo reactivo" />
+  </div>
+
+  <main class="main-layout">
+    
+    <aside class="side-widget">
+      <section class="glass-player" id="playerContainer">
+        
+        <div class="album-wrapper">
+          <img id="cover" src="./assets/img/cover1.jpg" alt="Carátula" />
+        </div>
+        
+        <div class="player-info">
+          <div class="status">NOW STREAMING</div>
+          <div id="nowPlaying">Selecciona un track</div>
+          
+          <div class="progress-area">
+            <input type="range" id="seek" value="0" step="0.1" aria-label="Progreso de la canción" />
+            <div class="time-stamps">
+              <span id="currentTime">0:00</span>
+              <span id="duration">0:00</span>
+            </div>
+          </div>
+
+          <div class="controls">
+            <button id="prevBtn" class="btn-icon" aria-label="Anterior">⏮</button>
+            <button id="pausePlayBtn" class="btn-play" aria-label="Reproducir/Pausar">▶</button>
+            <button id="skipBtn" class="btn-icon" aria-label="Siguiente">⏭</button>
+          </div>
+        </div>
+        
+        <audio id="audio"></audio>
+      </section>
+    </aside>
+
+    <section class="profile-hub">
+      <div class="avatar-container">
+        <img id="avatar" src="./assets/img/avatar.jpg" alt="elfleoncha avatar" />
+        <div class="online-indicator">LIVE</div>
+      </div>
+
+      <div class="profile-content">
+        <h1 class="hero-name">elfleoncha</h1>
+        <p class="tagline">DEV // STK | BCN</p>
+        
+        <div class="bio-terminal">
+          <span class="cmd">> user.bio:</span>
+          <p class="bio-text">
+            <span id="typewriter">fleoncha@system:~$ initializing_bio... COMPLETED:</span><span class="cursor">|</span>
+          </p>
+        </div>
+
+        <div class="social-interactive">
+          <a href="https://www.instagram.com/fleon.priv" target="_blank" rel="noopener" class="social-box">
+            <img src="./assets/img/logoIG.jpg" alt="Instagram">
+            <span>INSTAGRAM</span>
+          </a>
+          <a href="https://github.com/elfleoncha" target="_blank" rel="noopener" class="social-box">
+            <img src="./assets/img/github.jpg" alt="GitHub">
+            <span>GITHUB</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="minimal-footer">
+    <p>v4.5 // EST. 2026 // LEON-SYSTEMS</p>
+  </footer>
+
+</body>
+</html>
