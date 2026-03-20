@@ -16,12 +16,12 @@ const canciones = [
 const audio = document.getElementById('audio');
 const nowPlaying = document.getElementById('nowPlaying');
 const cover = document.getElementById('cover');
-const bgImage = document.querySelector('#fondo img'); // El fondo de la web
+const bgImage = document.querySelector('#fondo img'); 
 const pausePlayBtn = document.getElementById('pausePlayBtn');
 const seek = document.getElementById('seek');
 const currentTimeLabel = document.getElementById('currentTime');
 const durationLabel = document.getElementById('duration');
-const glassPlayer = document.getElementById('playerContainer'); // Cambiado a ID para más precisión
+const glassPlayer = document.getElementById('playerContainer'); 
 
 let currentSongIndex = 0;
 
@@ -36,9 +36,9 @@ function updateUI(song) {
   nowPlaying.textContent = song.title;
   cover.src = song.cover;
   
-  // EFECTO REACTIVO: El fondo cambia con la carátula
+  
   if (bgImage) {
-    bgImage.style.opacity = '0'; // Transición suave
+    bgImage.style.opacity = '0'; 
     setTimeout(() => {
       bgImage.src = song.cover;
       bgImage.style.opacity = '0.7';
@@ -59,7 +59,7 @@ function playSong(index, shouldPlay = true) {
   }
 }
 
-// Eventos de Control
+
 pausePlayBtn.addEventListener('click', () => {
   if (audio.paused) {
     audio.play();
@@ -82,7 +82,7 @@ document.getElementById('prevBtn').addEventListener('click', () => {
   playSong(currentSongIndex);
 });
 
-// Barra de progreso y tiempos
+
 audio.addEventListener('timeupdate', () => {
   if (!isNaN(audio.duration)) {
     seek.value = (audio.currentTime / audio.duration) * 100;
@@ -103,12 +103,12 @@ audio.addEventListener('ended', () => {
   playSong(currentSongIndex);
 });
 
-// Inicialización limpia
+
 playSong(currentSongIndex, false);
 
-// CONFIGURACIÓN EFECTO HACKER (TYPEWRITER)
+
 const bioText = " Poco a poco, lo pequeño se hace grande. // [Do_Not_Disturb: On]";
-const speed = 50; // Velocidad en milisegundos
+const speed = 50; 
 let i = 0;
 
 function typeWriter() {
@@ -119,18 +119,18 @@ function typeWriter() {
   }
 }
 
-// Iniciar el efecto cuando la página cargue
+
 window.onload = typeWriter;
-// --- MOTOR DE SISTEMA (RELOJ + CLIMA) ---
+
 
 function updateSystem() {
     const now = new Date();
     
-    // 1. Reloj Digital
+    
     const clock = document.getElementById('digital-clock');
     if(clock) clock.textContent = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
 
-    // 2. Reloj Analógico (Rotación)
+    
     const h = now.getHours();
     const m = now.getMinutes();
     const s = now.getSeconds();
@@ -140,7 +140,7 @@ function updateSystem() {
     document.getElementById('sec-hand').style.transform = `translateX(-50%) rotate(${s * 6}deg)`;
 }
 
-// 3. Clima Real BCN (Open-Meteo API - Gratis, sin Key)
+
 async function getBCNWeather() {
     try {
         const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=41.3887&longitude=2.1589&current_weather=true');
@@ -148,48 +148,48 @@ async function getBCNWeather() {
         document.getElementById('temp-val').textContent = `${Math.round(data.current_weather.temperature)}°C`;
         document.getElementById('weather-desc').textContent = "STK_ATMOSPHERE_OK";
     } catch (err) {
-        document.getElementById('temp-val').textContent = "18°C"; // Fallback
+        document.getElementById('temp-val').textContent = "18°C"; 
     }
 }
 
 setInterval(updateSystem, 1000);
 updateSystem();
 getBCNWeather();
-setInterval(getBCNWeather, 60000); // Actualiza clima cada 1 min
-/* --- [AÑADIR ESTA FUNCIÓN AL FINAL DE TU SCRIPT.JS] --- */
+setInterval(getBCNWeather, 60000); 
+
 
 function showTab(tabId) {
-    // 1. Ocultar todos los contenidos con fade
+    
     const contents = document.querySelectorAll('.tab-content');
     contents.forEach(content => {
         content.classList.remove('active');
     });
 
-    // 2. Desactivar todos los botones de la nav
+    
     const buttons = document.querySelectorAll('.nav-item');
     buttons.forEach(btn => {
         btn.classList.remove('active');
     });
 
-    // 3. Activar el seleccionado
+    
     const targetTab = document.getElementById('tab-' + tabId);
     targetTab.classList.add('active');
     
-    // El botón se activa por el evento click
+    
     event.currentTarget.classList.add('active');
 
-    // Reiniciar Typewriter si volvemos a Bio
+    
     if(tabId === 'bio') {
         i = 0;
-        document.getElementById("typewriter").innerHTML = "";
+        document.getElementById("typewriter").innerHTML = "fleoncha@system:~$ initializing_bio... COMPLETED:";
         typeWriter();
     }
 }
 
-// Asegúrate de que tu window.onload o DOMContentLoaded llame a las funciones iniciales
+
 document.addEventListener('DOMContentLoaded', () => {
     updateSystem();
     getBCNWeather();
     setInterval(updateSystem, 1000);
-    typeWriter(); // Iniciar efecto de texto
+    typeWriter(); 
 });
