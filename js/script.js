@@ -1,195 +1,100 @@
-/* FLEO-SYSTEMS // JS ENGINE v4.0 
-   OPTIMIZED FOR REACTIVE INTERFACES */
-
 const canciones = [
-  { src: './assets/audio/512.mp3', title: '512 - Mora', cover: './assets/img/covers/512.jpg' },
-  { src: './assets/audio/vacile.mp3', title: 'Vacile - Yan Block', cover: './assets/img/covers/vacile.jpg' },
-  { src: './assets/audio/Piensan.mp3', title: 'Piensan - Myke Towers', cover: './assets/img/covers/piensan.jpg' },
-  { src: './assets/audio/444.mp3', title: '444 - Yan Block', cover: './assets/img/covers/444.jpg' },
-  { src: './assets/audio/freestyle.mp3', title: 'Freestyle - Beny Jr', cover: './assets/img/covers/freestyle.jpg' },
-  { src: './assets/audio/turitmo.mp3', title: 'Tu Ritmo - Eladio', cover: './assets/img/covers/tu ritmo.jpg' },
-  { src: './assets/audio/monaco.mp3', title: 'Monaco - Bad Bunny', cover: './assets/img/covers/monaco.jpg' },
-  { src: './assets/audio/golfista.mp3', title: 'Golfista - Duko', cover: './assets/img/covers/golfista.jpg' },
-  { src: './assets/audio/120.mp3', title: '120 - Bad Bunny', cover: './assets/img/covers/120.jpg' }
+  { src: "./assets/audio/512.mp3", title: "512 — Mora", cover: "./assets/img/covers/512.jpg" },
+  { src: "./assets/audio/vacile.mp3", title: "Vacile — Yan Block", cover: "./assets/img/covers/vacile.jpg" },
+  { src: "./assets/audio/Piensan.mp3", title: "Piensan — Myke Towers", cover: "./assets/img/covers/piensan.jpg" },
+  { src: "./assets/audio/444.mp3", title: "444 — Yan Block", cover: "./assets/img/covers/444.jpg" },
+  { src: "./assets/audio/freestyle.mp3", title: "Freestyle — Beny Jr", cover: "./assets/img/covers/freestyle.jpg" },
+  { src: "./assets/audio/turitmo.mp3", title: "Tu Ritmo — Eladio", cover: "./assets/img/covers/turitmo.jpg" },
+  { src: "./assets/audio/monaco.mp3", title: "Monaco — Bad Bunny", cover: "./assets/img/covers/monaco.jpg" },
+  { src: "./assets/audio/golfista.mp3", title: "Golfista — Duko", cover: "./assets/img/covers/golfista.jpg" },
+  { src: "./assets/audio/120.mp3", title: "120 — Bad Bunny", cover: "./assets/img/covers/120.jpg" }
 ];
 
-const audio = document.getElementById('audio');
-const nowPlaying = document.getElementById('nowPlaying');
-const cover = document.getElementById('cover');
-const bgImage = document.querySelector('#fondo img'); 
-const pausePlayBtn = document.getElementById('pausePlayBtn');
-const seek = document.getElementById('seek');
-const currentTimeLabel = document.getElementById('currentTime');
-const durationLabel = document.getElementById('duration');
-const glassPlayer = document.getElementById('playerContainer'); 
+const audio = document.getElementById("audio");
+const cover = document.getElementById("cover");
+const nowPlaying = document.getElementById("nowPlaying");
+const playBtn = document.getElementById("play");
+const prevBtn = document.getElementById("prev");
+const nextBtn = document.getElementById("next");
+const seek = document.getElementById("seek");
+const curTime = document.getElementById("currentTime");
+const durTime = document.getElementById("duration");
+const listEl = document.getElementById("tracks");
 
-let currentSongIndex = 0;
+let index = 0;
 
-function formatTime(sec) {
-  if (isNaN(sec)) return "0:00";
-  const min = Math.floor(sec / 60);
-  const s = Math.floor(sec % 60).toString().padStart(2, '0');
-  return `${min}:${s}`;
+const ICON_PLAY = '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+const ICON_PAUSE = '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>';
+
+function fmt(sec) {
+  if (isNaN(sec) || sec === Infinity) return "0:00";
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60).toString().padStart(2, "0");
+  return m + ":" + s;
 }
 
-function updateUI(song) {
-  nowPlaying.textContent = song.title;
-  cover.src = song.cover;
-  
-  
-  if (bgImage) {
-    bgImage.style.opacity = '0'; 
-    setTimeout(() => {
-      bgImage.src = song.cover;
-      bgImage.style.opacity = '0.7';
-    }, 500);
-  }
+function renderList() {
+  listEl.innerHTML = "";
+  canciones.forEach((song, i) => {
+    const li = document.createElement("li");
+    li.className = "track" + (i === index ? " active" : "");
+    const n = document.createElement("span");
+    n.className = "n";
+    n.textContent = String(i + 1).padStart(2, "0");
+    const t = document.createElement("span");
+    t.className = "t";
+    t.textContent = song.title;
+    li.append(n, t);
+    li.addEventListener("click", () => play(i));
+    listEl.appendChild(li);
+  });
 }
 
-function playSong(index, shouldPlay = true) {
+function markActive() {
+  listEl.querySelectorAll(".track").forEach((el, i) => el.classList.toggle("active", i === index));
+}
+
+function select(i) {
+  index = (i + canciones.length) % canciones.length;
   const song = canciones[index];
   audio.src = song.src;
-  updateUI(song);
-
-  if (shouldPlay) {
-    audio.play().then(() => {
-      pausePlayBtn.textContent = '⏸';
-      glassPlayer.classList.add('playing');
-    }).catch(err => console.log("Autoplay bloqueado o error:", err));
-  }
+  cover.src = song.cover;
+  nowPlaying.textContent = song.title;
+  markActive();
 }
 
+function play(i, auto = true) {
+  select(i);
+  if (!auto) return;
+  audio.play().then(() => { playBtn.innerHTML = ICON_PAUSE; }).catch(() => {});
+}
 
-pausePlayBtn.addEventListener('click', () => {
+playBtn.addEventListener("click", () => {
   if (audio.paused) {
-    audio.play();
-    pausePlayBtn.textContent = '⏸';
-    glassPlayer.classList.add('playing');
+    if (!audio.src) select(index);
+    audio.play().then(() => { playBtn.innerHTML = ICON_PAUSE; }).catch(() => {});
   } else {
     audio.pause();
-    pausePlayBtn.textContent = '▶';
-    glassPlayer.classList.remove('playing');
+    playBtn.innerHTML = ICON_PLAY;
   }
 });
+prevBtn.addEventListener("click", () => play(index - 1));
+nextBtn.addEventListener("click", () => play(index + 1));
 
-document.getElementById('skipBtn').addEventListener('click', () => {
-  currentSongIndex = (currentSongIndex + 1) % canciones.length;
-  playSong(currentSongIndex);
+audio.addEventListener("timeupdate", () => {
+  curTime.textContent = fmt(audio.currentTime);
+  if (audio.duration) seek.value = (audio.currentTime / audio.duration) * 100;
+});
+audio.addEventListener("loadedmetadata", () => { durTime.textContent = fmt(audio.duration); });
+audio.addEventListener("ended", () => play(index + 1));
+audio.addEventListener("pause", () => { playBtn.innerHTML = ICON_PLAY; });
+audio.addEventListener("play", () => { playBtn.innerHTML = ICON_PAUSE; });
+
+seek.addEventListener("input", () => {
+  if (audio.duration) audio.currentTime = (seek.value / 100) * audio.duration;
 });
 
-document.getElementById('prevBtn').addEventListener('click', () => {
-  currentSongIndex = (currentSongIndex - 1 + canciones.length) % canciones.length;
-  playSong(currentSongIndex);
-});
+document.getElementById("year").textContent = new Date().getFullYear();
 
-
-audio.addEventListener('timeupdate', () => {
-  if (!isNaN(audio.duration)) {
-    seek.value = (audio.currentTime / audio.duration) * 100;
-    currentTimeLabel.textContent = formatTime(audio.currentTime);
-  }
-});
-
-audio.addEventListener('loadedmetadata', () => {
-  durationLabel.textContent = formatTime(audio.duration);
-});
-
-seek.addEventListener('input', () => {
-  audio.currentTime = (seek.value / 100) * audio.duration;
-});
-
-audio.addEventListener('ended', () => {
-  currentSongIndex = (currentSongIndex + 1) % canciones.length;
-  playSong(currentSongIndex);
-});
-
-
-playSong(currentSongIndex, false);
-
-
-const bioText = " Poco a poco, lo pequeño se hace grande. // [Do_Not_Disturb: On]";
-const speed = 50; 
-let i = 0;
-
-function typeWriter() {
-  if (i < bioText.length) {
-    document.getElementById("typewriter").innerHTML += bioText.charAt(i);
-    i++;
-    setTimeout(typeWriter, speed);
-  }
-}
-
-
-window.onload = typeWriter;
-
-
-function updateSystem() {
-    const now = new Date();
-    
-    
-    const clock = document.getElementById('digital-clock');
-    if(clock) clock.textContent = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-
-    
-    const h = now.getHours();
-    const m = now.getMinutes();
-    const s = now.getSeconds();
-
-    document.getElementById('hour-hand').style.transform = `translateX(-50%) rotate(${(h * 30) + (m / 2)}deg)`;
-    document.getElementById('min-hand').style.transform = `translateX(-50%) rotate(${m * 6}deg)`;
-    document.getElementById('sec-hand').style.transform = `translateX(-50%) rotate(${s * 6}deg)`;
-}
-
-
-async function getBCNWeather() {
-    try {
-        const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=41.3887&longitude=2.1589&current_weather=true');
-        const data = await res.json();
-        document.getElementById('temp-val').textContent = `${Math.round(data.current_weather.temperature)}°C`;
-        document.getElementById('weather-desc').textContent = "STK_ATMOSPHERE_OK";
-    } catch (err) {
-        document.getElementById('temp-val').textContent = "18°C"; 
-    }
-}
-
-setInterval(updateSystem, 1000);
-updateSystem();
-getBCNWeather();
-setInterval(getBCNWeather, 60000); 
-
-
-function showTab(tabId) {
-    
-    const contents = document.querySelectorAll('.tab-content');
-    contents.forEach(content => {
-        content.classList.remove('active');
-    });
-
-    
-    const buttons = document.querySelectorAll('.nav-item');
-    buttons.forEach(btn => {
-        btn.classList.remove('active');
-    });
-
-    
-    const targetTab = document.getElementById('tab-' + tabId);
-    targetTab.classList.add('active');
-    
-    
-    event.currentTarget.classList.add('active');
-
-    
-    if(tabId === 'bio') {
-        i = 0;
-        document.getElementById("typewriter").innerHTML = "fleoncha@system:~$ initializing_bio... COMPLETED:";
-        typeWriter();
-    }
-}
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    updateSystem();
-    getBCNWeather();
-    setInterval(updateSystem, 1000);
-    typeWriter(); 
-});
+renderList();
+select(0);
